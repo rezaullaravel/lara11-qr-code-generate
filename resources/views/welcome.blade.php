@@ -184,33 +184,47 @@
 
 
   <div class="container pt-5">
+
      <div class="row">
         <div class="col-sm-4">
-            <form action="{{ route('photo.upload') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <input type="file" name="image" required class="form-control"> <br>
-                <input type="submit" value="Submit" class="btn btn-info">
-              </form>
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('photo.upload') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="image" required class="form-control"> <br>
+                        <input type="submit" value="Submit" class="btn btn-info">
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="col-sm-8">
+            @if (session('sms'))
+                <div class="alert alert-success">
+                    <h4 class="text-center">{{ Session::get('sms') }}</h4>
+                </div>
+            @endif
             <table class="table table-bordered">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <td>Sl</td>
                         <td>Image</td>
                         <td>Qr code</td>
+                        <td>Action</td>
                     </tr>
                 </thead>
 
                 <tbody>
                     @foreach ($images as $key=>$row)
-                         <tr>
+                         <tr class="text-center">
                             <td>{{ $key+1 }}</td>
                             <td>
                                 <img src="{{ asset($row->image) }}" alt="" width="100">
                             </td>
                             <td>
                                <span style="width:80px;height:80px;">{!! $row->code !!}</span>
+                            </td>
+                            <td>
+                                <a href="{{ route('delete',$row->id) }}" onclick="return confirm('Are you sure to delete this item???');" class="btn btn-danger btn-sm">Delete</a>
                             </td>
                          </tr>
                     @endforeach
