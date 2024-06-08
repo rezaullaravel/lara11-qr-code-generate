@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -13,8 +14,13 @@ class PhotoUploadController extends Controller
 {
 
     public function index(){
-        $images = Photo::all();
-        return view('welcome',compact('images'));
+        if(Auth::check()){
+            $images = Photo::all();
+            return view('welcome',compact('images'));
+        } else{
+            return redirect('/login');
+        }
+
     }//end method
     public function photoUpload(Request $request){
         $image = $request->file('image');

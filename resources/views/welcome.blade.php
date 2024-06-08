@@ -196,6 +196,13 @@
                     </form>
                 </div>
             </div>
+
+            <div class="card mt-5">
+                <div class="card-body">
+                    <a href="{{ route('admin.password.change') }}" class="btn btn-info">Change Password</a>
+                    <a href="{{ route('admin.logout') }}" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
         </div>
         <div class="col-sm-8">
             @if (session('sms'))
